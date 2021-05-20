@@ -1,0 +1,6 @@
+extract latest bento4 SDK in following folder structure
+
+bento4
+  |---bin
+  |---lib
+  |---utils
