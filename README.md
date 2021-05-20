@@ -1,16 +1,4 @@
 # bento4_flask
 This is an application make use of bento4 SDK to generate manifest.
 
-Folder structure
-
-bento4_flask
-      | ----- bento4_web.py
-      | ----- bento4 (need to extract from bento SDK)
-              | ----- bin
-              | ----- lib
-              | ----- utils
-      | ----- templates
-      | ----- es (need to create)
-              | ----- video
-              | ----- audio
-      | ----- output (need to create)
+<img width="411" alt="Screen Shot 2021-05-20 at 1 16 57 PM" src="https://user-images.githubusercontent.com/26093451/118923158-b4c03000-b96d-11eb-8b36-9b67af605935.png">
