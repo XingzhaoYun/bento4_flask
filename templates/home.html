@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bento4 Online Test</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='online.css') }}">
+</head>
+
+<body>
+    <div class="container mt-5 mb-5">
+        <div>Audio</div>
+        <label>Codecs</label>
+        <select class="form-control codecs selecterFilter" data-target="content type">
+            <option value="-1">-- Select Codecs --</option>
+            <option data-ref='ims'>AC4-IMS</option>
+            <option data-ref='cbi'>AC4-CBI</option>
+            <option>DDP</option>
+            <option>DDP-JOC</option>
+            <option>AAC</option>
+        </select>
+        <label>fps</label>
+        <select class="form-control fps">
+            <option value="-1">-- Select Frame Per Second --</option>
+            <option data-belong='ims'>25</option>
+            <option data-belong='ims'>29.97</option>
+        </select>
+    </div>
+
+    <div class="container mt-5 mb-5">
+        <div>Video</div>
+        <label>Codecs</label>
+        <select class="form-control codecs selecterFilter" data-target="content type">
+            <option value="-1">-- Select Codecs --</option>
+            <option>H264</option>
+            <option>H265</option>
+            <option>Dolby Vision with HEVC base</option>
+            <option>Dolby Vision with AVC base</option>
+        </select>
+        <label>fps</label>
+        <select class="form-control fps">
+            <option value="-1">-- Select Frame Per Second --</option>
+            <option>25</option>
+            <option>29.97</option>
+            <option>50</option>
+            <option>59.94</option>
+        </select>
+        <div>
+            <button>Submit</button>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<html>
+ <head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <title>Bento4 Online</title>>
+ </head>
+   <body>
+      <header class="jumbotron" style="background: #161819 none;color: #ffffff">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <h2 id="top-title">Dolby Web Manifest Generator</h2>
+                    <h3>
+                        <sup >Configuration page</sup>
+                    </h3>
+                </div>
+            </div>
+        </div>
+      </header>
+      <div class="col-md-6" style="margin-left:300px;">
+          <form id= 'form1' action = '/config' method = "post">
+             <p style="font-size:20px"><b>Select profiles:</b></p>
+             <select id="mySelect" name = "profile">
+                 <option value="live">LIVE</option>
+                 <option value="on-demand">Video OnDemand</option>
+             </select>
+             <p style="font-size:20px"><br><b>Select video track(s):</b></p>
+             <p>AVC:</p>
+             <input type="checkbox" name="video_track" value="Holi_360p_25fps_h264.h264"><b>25fps 360p</b>
+             <input type="checkbox" name="video_track" value="Holi_540p_25fps_h264.h264"><b>25fps 540p</b>
+             <input type="checkbox" name="video_track" value="Holi_720p_25fps_h264.h264"><b>25fps 720p</b>
+             <input type="checkbox" name="video_track" value="Holi_1080p_4500kbps_25fps_h264.h264"><b>25fps 1080p 4.5Mbps</b>
+             <input type="checkbox" name="video_track" value="Holi_1080p_6000kbps_25fps_h264.h264"><b>25fps 1080p 6.0Mbps</b>
+             
+             <p><br>HEVC:</p>
+             <input type="checkbox" name="video_track" value="Holi_360p_25fps_h265.h265"><b>25fps 360p</b>
+             <input type="checkbox" name="video_track" value="Holi_540p_25fps_h265.h265"><b>25fps 540p</b>
+             <input type="checkbox" name="video_track" value="Holi_720p_25fps_h265.h265"><b>25fps 720p</b>
+             <input type="checkbox" name="video_track" value="Holi_1080p_25fps_h265.h265"><b>25fps 1080p</b>
+             <input type="checkbox" name="video_track" value="Holi_1440p_25fps_h265.h265"><b>25fps 1440p</b>
+             <input type="checkbox" name="video_track" value="Holi_2160p_25fps_h265.h265"><b>25fps 2160p</b>
+             <input type="checkbox" name="video_track" value="Holi_720p_50fps_h265.h265"><b>50fps 720p</b>
+             <input type="checkbox" name="video_track" value="Holi_1080p_50fps_h265.h265"><b>50fps 1080p</b>
+             <input type="checkbox" name="video_track" value="Holi_1440p_50fps_h265.h265"><b>50fps 1440p</b>
+             <input type="checkbox" name="video_track" value="Holi_2160p_50fps_h265.h265"><b>50fps 2160p</b>
+             
+             <p><br>Dolby Vision:</p>
+             <input type="checkbox" name="video_track" value="Holi_360p_25fps_h265_str.h265"><b>25fps 360p</b>
+             <input type="checkbox" name="video_track" value="Holi_540p_25fps_h265_str.h265"><b>25fps 540p</b>
+             <input type="checkbox" name="video_track" value="Holi_720p_25fps_h265_str.h265"><b>25fps 720p</b>
+             <input type="checkbox" name="video_track" value="Holi_1080p_25fps_h265_str.h265"><b>25fps 1080p</b>
+             <input type="checkbox" name="video_track" value="Holi_1440p_25fps_h265_str.h265"><b>25fps 1440p</b>
+             <input type="checkbox" name="video_track" value="Holi_2160p_25fps_h265_str.h265"><b>25fps 2160p</b>
+             <input type="checkbox" name="video_track" value="Holi_720p_50fps_h265_str.h265"><b>50fps 720p</b>
+             <input type="checkbox" name="video_track" value="Holi_1080p_50fps_h265_str.h265"><b>50fps 1080p</b>
+             <input type="checkbox" name="video_track" value="Holi_1440p_50fps_h265_str.h265"><b>50fps 1440p</b>
+             <input type="checkbox" name="video_track" value="Holi_2160p_50fps_h265_str.h265"><b>50fps 2160p</b>
+             <br>
+             <p style="font-size:20px"><br><b>Select audio track(s):</b></p>
+             <p>AAC:</p>
+             <input type="checkbox" name="audio_track" value="Holi_en_2ch_64kbps_aac.aac"><b>English 2.0 stereo</b>
+             <input type="checkbox" name="audio_track" value="Holi_fr_2ch_64kbps_aac.aac"><b>French 2 stereo</b>
+             
+             <p><br>DDP-2ch:</p>
+             <input type="checkbox" name="audio_track" value="Holi_en_2ch_128kbps_ddp.ec3"><b>English 2 stereo</b>
+             <input type="checkbox" name="audio_track" value="Holi_fr_2ch_128kbps_ddp.ec3"><b>French 2 stereo</b>
+             
+             <p><br>DDP-6ch:</p>
+             <input type="checkbox" name="audio_track" value="Holi_en_6ch_256kbps_ddp.ec3"><b>English 5.1 channels</b>
+             <input type="checkbox" name="audio_track" value="Holi_fr_6ch_256kbps_ddp.ec3"><b>French 5.1 channels</b>
+             
+             <p><br>DDP-JOC:</p>
+             <input type="checkbox" name="audio_track" value="Holi_en_6ch_640kbps_ddp_joc.ec3"><b>English Atmos</b>
+             <input type="checkbox" name="audio_track" value="Holi_fr_6ch_640kbps_ddp_joc.ec3"><b>French Atmos</b>
+             
+             <p><br>AC4-IMS:</p>
+             <input type="checkbox" name="audio_track" value="Holi_en_ims_112kbps_25fps_ac4.ac4"><b>English Immersive</b>
+             <input type="checkbox" name="audio_track" value="Holi_fr_ims_112kbps_25fps_ac4.ac4"><b>French Immersive</b>
+             
+             <p><br>AC4-6ch:</p>
+             <input type="checkbox" name="audio_track" value="Holi_en_6ch_128kbps_25fps_ac4.ac4"><b>English 5.1 channels</b>
+             <input type="checkbox" name="audio_track" value="Holi_fr_6ch_128kbps_25fps_ac4.ac4"><b>French 5.1 channels</b>
+             
+             <p><br>AC4-514ch:</p>
+             <input type="checkbox" name="audio_track" value="Holi_en_514ch_192kbps_25fps_ac4.ac4"><b>English 5.1.4 channels</b>
+             <input type="checkbox" name="audio_track" value="Holi_en_514ch_192kbps_25fps_ac4.ac4"><b>French 5.1.4 channels</b>
+             <br>
+             <p><input type = "submit" value = "submit" /></p>
+             <!--<p><input type = "text" name = "nm" /></p>
+             <p><input type = "submit" value = "submit" /></p>
+         -->
+          </form>
+      </div>
+      <div id="result">
+        {% if car_brand is defined %}
+            You have selected: {{ car_brand }}
+        {% endif %}
+      </div>
+   </body>
+</html>
