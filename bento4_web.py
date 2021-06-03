@@ -89,11 +89,11 @@ def return_files_vod():
 def config():
     if request.method == "POST":
         video_tracks = request.form.getlist("video_track")
-        v_set = [('es/video/'+video_track).replace('.h264', '_f_dash.mp4').replace('.h265', '_f_dash.mp4') for video_track in video_tracks]
+        v_set = [('frag_mp4_DASH/video/'+video_track).replace('.h264', '_f_dash.mp4').replace('.h265', '_f_dash.mp4') for video_track in video_tracks]
         video_args = ' '.join(v_set)
 
         audio_tracks = request.form.getlist("audio_track")
-        a_set = [('es/audio/'+ audio_track).replace('.aac', '_f_dash.mp4'). \
+        a_set = [('frag_mp4_DASH/audio/'+ audio_track).replace('.aac', '_f_dash.mp4'). \
                 replace('.ac3', '_f_dash.mp4').replace('.ec3', '_f_dash.mp4').replace('.ac4', '_f_dash.mp4') for audio_track in audio_tracks]
         audio_args = ' '.join(a_set)
 
