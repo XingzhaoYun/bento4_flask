@@ -102,14 +102,14 @@ app.error_handler_spec[None][404] = page_not_found
 @app.route('/return-manifest-live/')
 def return_files_live():
     try:
-        return send_file('/Users/xyun/Documents/Online/online_bento4/output/output_live/live.mpd', mimetype='text/mpd',as_attachment=True)
+        return send_file('/Users/xyun/Documents/Online/online_bento4/output/dash_live/live.mpd', mimetype='text/mpd',as_attachment=True)
     except Exception as e:
         return str(e)
 
 @app.route('/return-manifest-vod/')
 def return_files_vod():
     try:
-        return send_file('/Users/xyun/Documents/Online/online_bento4/output/output_vod/ondemand.mpd', mimetype='text/mpd', as_attachment=True)
+        return send_file('/Users/xyun/Documents/Online/online_bento4/output/dash_vod/ondemand.mpd', mimetype='text/mpd', as_attachment=True)
     except Exception as e:
         return str(e)
 
@@ -128,16 +128,17 @@ def config():
         audio_args = ' '.join(a_set)
 
         # subprocess.call("python " + "utils/mp4-dash.py", shell=True)
-        subprocess.call('python bento4/utils/mp4-dash.py -f -o output/output_vod --no-media --mpd-name ' \
-            'ondemand.mpd --language-map English:eng,French:fra --profiles ondemand --no-split ' + video_args + ' ' + audio_args, shell=True)
-        subprocess.call('python bento4/utils/mp4-dash.py -f -o output/output_live --no-media --mpd-name ' \
+        subprocess.call('python bento4/utils/mp4-dash.py -f -o output/dash_vod --no-media --mpd-name ' \
+            'ondemand.mpd --language-map English:eng,French:fra --profiles on-demand --no-split ' + video_args + ' ' + audio_args, shell=True)
+
+        subprocess.call('python bento4/utils/mp4-dash.py -f -o output/dash_live --no-media --mpd-name ' \
             'live.mpd --language-map English:eng,French:fra --profiles live --use-segment-template-number-padding --use-segment-timeline ' \
             + video_args + ' ' + audio_args, shell=True)
         print(video_args)
         print(audio_args)
-        with open("output/output_live/live.mpd", "r") as live_file:
+        with open("output/dash_live/live.mpd", "r") as live_file:
             live_content = live_file.read()
-        with open("output/output_vod/ondemand.mpd", "r") as vod_file:
+        with open("output/dash_vod/ondemand.mpd", "r") as vod_file:
             vod_content = vod_file.read()
         profile = request.form.get("profile", None)
         if profile!=None:
