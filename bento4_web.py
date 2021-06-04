@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, request, redirect, send_file
 import subprocess
 import logging
 import os
-from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
 
@@ -71,32 +70,6 @@ app = Flask(__name__)
 #         ]
 #     }
 # }
-
-handler = RotatingFileHandler(os.path.join(app.root_path, 'logs', 'error_log.log'), maxBytes=102400, backupCount=10)
-logging_format = logging.Formatter(
-    '%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s')
-
-handler.setFormatter(logging_format)
-app.logger.addHandler(handler)
-
-@app.errorhandler(404)
-def page_not_found(error):
-    app.logger.error(error)
-
-    return 'This page does not exist', 404
-
-
-@app.errorhandler(500)
-def special_exception_handler(error):
-    app.logger.error(error)
-    return '500 error', 500
-
-
-def page_not_found(error):
-    return 'This page does not exist', 404
-
-
-app.error_handler_spec[None][404] = page_not_found
 
 
 @app.route('/return-manifest-live/')
