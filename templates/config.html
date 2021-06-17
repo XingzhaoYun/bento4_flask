@@ -1,98 +1,99 @@
-<html>
- <head>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-    <title>Bento4 Online</title>>
- </head>
-   <body>
-      <header class="jumbotron" style="background: #161819 none;color: #ffffff">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10">
-                    <h2 id="top-title">Dolby Web Manifest Generator</h2>
-                    <h3>
-                        <sup >Configuration page</sup>
-                    </h3>
-                </div>
+{% extends "base.html" %}
+{% block title %}Bento4 Online{% endblock %}
+{% block subtitle %}Configuration page{% endblock %}
+{% block body %}
+<div class="container col-md-8">
+  <form id= 'form1' action = '/config' method = "post">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <select id="mySelect1" name = "media_type" class="col-md-3">
+              <option value="Default">Default</option>
+              <option value="Video">Video</option>
+              <option value="Audio">Audio</option>
+            </select>
+            <select id="mySelect2" name = "media_codec" class="col-md-3">
+              <option value="default">Default</option>
+            </select>
+            <select id="mySelect3" name = "media_file" class="col-md-3">
+              <option value="default">Default</option>
+            </select>
+            <input type = "submit" class="btn btn-primary col-md-2" name='action' value = "Add" style="padding: 2px; width: 22%" />
+        </li>
+        <li class="list-group-item">
+            <div>
+                <ul class="list-group">
+                    <p><b>Selected tracks:</b></p>
+                    {% if input_list is defined %}
+                      {% for track in input_list %}
+                      <li class="list-group-item" >
+                        <input class="form-check-input" type="checkbox" name="selected_track" value="{{ track }}"><b>{{ track }}</b><br>
+                      </li>
+                      {% endfor %}
+                    {% endif %}
+                </ul>
             </div>
-        </div>
-      </header>
-      <div class="col-md-6" style="margin-left:300px;">
-          <form id= 'form1' action = '/config' method = "post">
-             <p style="font-size:20px"><b>Select profiles:</b></p>
-             <select id="mySelect" name = "profile">
-                 <option value="live">LIVE</option>
-                 <option value="on-demand">Video OnDemand</option>
-             </select>
-             <p style="font-size:20px"><br><b>Select video track(s):</b></p>
-             <p>AVC:</p>
-             <input type="checkbox" name="video_track" value="Holi_360p_25fps_h264.h264"><b>25fps 360p</b>
-             <input type="checkbox" name="video_track" value="Holi_540p_25fps_h264.h264"><b>25fps 540p</b>
-             <input type="checkbox" name="video_track" value="Holi_720p_25fps_h264.h264"><b>25fps 720p</b>
-             <input type="checkbox" name="video_track" value="Holi_1080p_4500kbps_25fps_h264.h264"><b>25fps 1080p 4.5Mbps</b>
-             <input type="checkbox" name="video_track" value="Holi_1080p_6000kbps_25fps_h264.h264"><b>25fps 1080p 6.0Mbps</b>
-             
-             <p><br>HEVC:</p>
-             <input type="checkbox" name="video_track" value="Holi_360p_25fps_h265.h265"><b>25fps 360p</b>
-             <input type="checkbox" name="video_track" value="Holi_540p_25fps_h265.h265"><b>25fps 540p</b>
-             <input type="checkbox" name="video_track" value="Holi_720p_25fps_h265.h265"><b>25fps 720p</b>
-             <input type="checkbox" name="video_track" value="Holi_1080p_25fps_h265.h265"><b>25fps 1080p</b>
-             <input type="checkbox" name="video_track" value="Holi_1440p_25fps_h265.h265"><b>25fps 1440p</b>
-             <input type="checkbox" name="video_track" value="Holi_2160p_25fps_h265.h265"><b>25fps 2160p</b>
-             <input type="checkbox" name="video_track" value="Holi_720p_50fps_h265.h265"><b>50fps 720p</b>
-             <input type="checkbox" name="video_track" value="Holi_1080p_50fps_h265.h265"><b>50fps 1080p</b>
-             <input type="checkbox" name="video_track" value="Holi_1440p_50fps_h265.h265"><b>50fps 1440p</b>
-             <input type="checkbox" name="video_track" value="Holi_2160p_50fps_h265.h265"><b>50fps 2160p</b>
-             
-             <p><br>Dolby Vision:</p>
-             <input type="checkbox" name="video_track" value="Holi_360p_25fps_h265_str.h265"><b>25fps 360p</b>
-             <input type="checkbox" name="video_track" value="Holi_540p_25fps_h265_str.h265"><b>25fps 540p</b>
-             <input type="checkbox" name="video_track" value="Holi_720p_25fps_h265_str.h265"><b>25fps 720p</b>
-             <input type="checkbox" name="video_track" value="Holi_1080p_25fps_h265_str.h265"><b>25fps 1080p</b>
-             <input type="checkbox" name="video_track" value="Holi_1440p_25fps_h265_str.h265"><b>25fps 1440p</b>
-             <input type="checkbox" name="video_track" value="Holi_2160p_25fps_h265_str.h265"><b>25fps 2160p</b>
-             <input type="checkbox" name="video_track" value="Holi_720p_50fps_h265_str.h265"><b>50fps 720p</b>
-             <input type="checkbox" name="video_track" value="Holi_1080p_50fps_h265_str.h265"><b>50fps 1080p</b>
-             <input type="checkbox" name="video_track" value="Holi_1440p_50fps_h265_str.h265"><b>50fps 1440p</b>
-             <input type="checkbox" name="video_track" value="Holi_2160p_50fps_h265_str.h265"><b>50fps 2160p</b>
-             <br>
-             <p style="font-size:20px"><br><b>Select audio track(s):</b></p>
-             <p>AAC:</p>
-             <input type="checkbox" name="audio_track" value="Holi_en_2ch_64kbps_aac.aac"><b>English 2.0 stereo</b>
-             <input type="checkbox" name="audio_track" value="Holi_fr_2ch_64kbps_aac.aac"><b>French 2 stereo</b>
-             
-             <p><br>DDP-2ch:</p>
-             <input type="checkbox" name="audio_track" value="Holi_en_2ch_128kbps_ddp.ec3"><b>English 2 stereo</b>
-             <input type="checkbox" name="audio_track" value="Holi_fr_2ch_128kbps_ddp.ec3"><b>French 2 stereo</b>
-             
-             <p><br>DDP-6ch:</p>
-             <input type="checkbox" name="audio_track" value="Holi_en_6ch_256kbps_ddp.ec3"><b>English 5.1 channels</b>
-             <input type="checkbox" name="audio_track" value="Holi_fr_6ch_256kbps_ddp.ec3"><b>French 5.1 channels</b>
-             
-             <p><br>DDP-JOC:</p>
-             <input type="checkbox" name="audio_track" value="Holi_en_6ch_640kbps_ddp_joc.ec3"><b>English Atmos</b>
-             <input type="checkbox" name="audio_track" value="Holi_fr_6ch_640kbps_ddp_joc.ec3"><b>French Atmos</b>
-             
-             <p><br>AC4-IMS:</p>
-             <input type="checkbox" name="audio_track" value="Holi_en_ims_112kbps_25fps_ac4.ac4"><b>English Immersive</b>
-             <input type="checkbox" name="audio_track" value="Holi_fr_ims_112kbps_25fps_ac4.ac4"><b>French Immersive</b>
-             
-             <p><br>AC4-6ch:</p>
-             <input type="checkbox" name="audio_track" value="Holi_en_6ch_128kbps_25fps_ac4.ac4"><b>English 5.1 channels</b>
-             <input type="checkbox" name="audio_track" value="Holi_fr_6ch_128kbps_25fps_ac4.ac4"><b>French 5.1 channels</b>
-             
-             <p><br>AC4-514ch:</p>
-             <input type="checkbox" name="audio_track" value="Holi_en_514ch_192kbps_25fps_ac4.ac4"><b>English 5.1.4 channels</b>
-             <input type="checkbox" name="audio_track" value="Holi_en_514ch_192kbps_25fps_ac4.ac4"><b>French 5.1.4 channels</b>
-             <br>
-             <p><input type = "submit" value = "submit" /></p>
-             <!--<p><input type = "text" name = "nm" /></p>
-             <p><input type = "submit" value = "submit" /></p>
-         -->
-          </form>
-      </div>
-   </body>
-</html>
+        </li>
+        <li class="list-group-item">
+            <input type = "submit" class="btn btn-primary" name='action' value = "Remove" style="width: 32%" />
+            <input type = "submit" class="btn btn-primary" name='action' value = "Reset" style="width: 33%" />
+            <input type = "submit" class="btn btn-primary" name='action' value = "Submit" style="width: 33%" />
+        </li>
+    </ul>
+  </form>
+  <script>
+    let type_select = document.getElementById('mySelect1');
+    let codec_select = document.getElementById('mySelect2');
+    let file_select = document.getElementById('mySelect3');
+    let type = ''
+    let codec = ''
+    keys = []
+    type_select.onchange = function() {
+      type = type_select.value;
+      let optionHTML = '<option value="Defalut">Defalut</option>';
+      if (type == 'Audio') {
+        let keys = {{media_tracks['audios'] | safe}};
+        console.log({{media_tracks['audios'] | safe}});
+        optionHTML += '<option value="AAC">AAC</option><option value="DDP-2ch">DDP-2ch</option><option value="DDP-6ch">DDP-6ch</option><option value="DDP-JOC">DDP-JOC</option><option value="AC4-IMS">AC4-IMS</option><option value="AC4-6ch">AC4-6ch</option><option value="AC4-514ch">AC4-514ch</option>';
+        codec_select.innerHTML = optionHTML;
+      } else if (type == 'Video') {
+        let keys = {{media_tracks['audios'] | safe}};
+        console.log(keys.type);
+        optionHTML += '<option value="AVC">AVC</option><option value="HEVC">HEVC</option><option value="Dolby Vision">Dolby Vision</option>'
+        codec_select.innerHTML = optionHTML;
+      }
+    }
+    codec_select.onchange = function() {
+      type = type_select.value;
+      codec = codec_select.value;
+      let optionHTML = '<option value="Defalut">Defalut</option>';
+      if (type == 'Audio') {
+        if (codec == 'AAC') {
+          optionHTML += '<option value=Holi_en_2ch_64kbps_aac.aac>English 2.0 stereo</option><option value=Holi_fr_2ch_64kbps_aac.aac>French 2.0 stereo</option>';
+        } else if (codec == 'DDP-2ch') {
+          optionHTML += '<option value=Holi_en_2ch_128kbps_ddp.ec3>English 2.0 stereo</option><option value=Holi_fr_2ch_128kbps_ddp.ec3>French 2.0 stereo</option>';
+        } else if (codec == 'DDP-6ch') {
+          optionHTML += '<option value=Holi_en_6ch_256kbps_ddp.ec3>English 5.1 channels</option><option value=Holi_en_6ch_256kbps_ddp.ec3>French 5.1 channels</option>';
+        } else if (codec == 'DDP-JOC') {
+          optionHTML += '<option value=Holi_en_6ch_640kbps_ddp_joc.ec3>English Atmos</option><option value=Holi_en_6ch_640kbps_ddp_joc.ec3>French Atmos</option>';
+        } else if (codec == 'AC4-IMS') {
+          optionHTML += '<option value=Holi_en_ims_112kbps_25fps_ac4.ac4>English Immersive</option><option value=Holi_en_ims_112kbps_25fps_ac4.ac4>French Immersive</option>';
+        } else if (codec == 'AC4-6ch') {
+          optionHTML += '<option value=Holi_en_6ch_128kbps_25fps_ac4.ac4>English 5.1 channels</option><option value=Holi_en_6ch_128kbps_25fps_ac4.ac4>French 5.1 channels</option>';
+        } else if (codec == 'AC4-514ch') {
+          optionHTML += '<option value=Holi_en_514ch_192kbps_25fps_ac4.ac4>English 5.1.4 channels</option><option value=Holi_en_514ch_192kbps_25fps_ac4.ac4>French 5.1.4 channels</option>';
+        }
+      } else if (type == 'Video') {
+        if (codec == 'AVC') {
+          optionHTML += '<option value=Holi_360p_25fps_h264.h264>25fps 360p</option><option value=Holi_540p_25fps_h264.h264>25fps 540p</option><option value=Holi_720p_25fps_h264.h264>25fps 720p</option><option value=Holi_1080p_4500kbps_25fps_h264.h264>25fps 1080p 4.5Mbps</option><option value=Holi_1080p_6000kbps_25fps_h264.h264>25fps 1080p 6.0Mbps</option>';
+        } else if (codec == 'HEVC') {
+          optionHTML += '<option value=Holi_360p_25fps_h265.h265>25fps 360p</option><option value=Holi_540p_25fps_h265.h265>25fps 540p</option><option value=Holi_720p_25fps_h265.h265>25fps 720p</option><option value=Holi_1080p_25fps_h265.h265>25fps 1080p</option><option value=Holi_1440p_25fps_h265.h265>25fps 1440p</option><option value=Holi_2160p_25fps_h265.h265>25fps 2160p</option><option value=Holi_720p_50fps_h265.h265>50fps 720p</option><option value=Holi_1080p_50fps_h265.h265>50fps 1080p</option><option value=Holi_1440p_50fps_h265.h265>50fps 1440p</option><option value=Holi_2160p_50fps_h265.h265>50fps 2160p</option>';
+        } else if (codec == 'Dolby Vision') {
+          optionHTML += '<option value=Holi_360p_25fps_h265_str.h265>25fps 360p</option><option value=Holi_540p_25fps_h265_str.h265>25fps 540p</option><option value=Holi_720p_25fps_h265_str.h265>25fps 720p</option><option value=Holi_1080p_25fps_h265_str.h265>25fps 1080p</option><option value=Holi_1440p_25fps_h265_str.h265>25fps 1440p</option><option value=Holi_2160p_25fps_h265_str.h265>25fps 2160p</option><option value=Holi_720p_50fps_h265_str.h265>50fps 720p</option><option value=Holi_1080p_50fps_h265_str.h265>50fps 1080p</option><option value=Holi_1440p_50fps_h265_str.h265>50fps 1440p</option><option value=Holi_2160p_50fps_h265_str.h265>50fps 2160p</option>';
+        }
+      }
+      console.log(optionHTML);
+      file_select.innerHTML = optionHTML;
+    }
+  </script>
+</div>
+{% endblock %}

@@ -1,33 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Download Results</title>
-</head>
-<body>
-    <header class="jumbotron" style="background: #161819 none;color: #ffffff">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10">
-                    <h2 id="top-title">Dolby Web Manifest Generator</h2>
-                    <h3>
-                        <sup >Download results</sup>
-                    </h3>
-                </div>
-            </div>
+{% extends "base.html" %}
+{% block title %}Bento4 Online{% endblock %}
+{% block subtitle %}Download results{% endblock %}
+{% block body %}
+<ul class="list-group">
+    <li class="list-group-item">
+        <h3>DASH-VOD manifest</h3>
+        <div class="container" align="left">
+            <a href="/return-manifest-vod/" target="blank"><button class='btn btn-primary'>Download DASH-VOD</button></a>
         </div>
-    </header>
+        <pre>{{ vod_content }}</pre>
+    </li>
     <br>
-    <p>DASH-VOD manifest</p>
-    <pre>{{ vod_content }}</pre>
-   <div class="container" align="left" style="margin-left:100px;">
-        <a href="/return-manifest-vod/" target="blank"><button class='btn btn-default'>Download DASH-VOD</button></a>
-   </div>
-   <br>
-   <p>DASH-LIVE manifest</p>
-   <pre>{{ live_content}}</pre>
-   <div class="container" align="left" style="margin-left:100px;">
-        <a href="/return-manifest-live/" target="blank"><button class='btn btn-default'>Download DASH-LIVE</button></a>
-   </div>
-
-</body>
-</html>
+    <li class="list-group-item">
+        <h3>DASH-LIVE manifest</h3>
+        <div class="container" align="left">
+            <a href="/return-manifest-live/" target="blank"><button class='btn btn-primary'>Download DASH-LIVE</button></a>
+        </div>
+        <pre>{{ live_content}}</pre>
+    </li>
+</ul>
+{% endblock %}
