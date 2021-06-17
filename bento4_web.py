@@ -72,6 +72,8 @@ media_tracks = {
     }
 }
 
+input_list = []
+
 @app.route('/return-manifest-live/')
 def return_files_live():
     try:
