@@ -72,8 +72,6 @@ media_tracks = {
     }
 }
 
-input_list = ['Defalut']
-
 @app.route('/return-manifest-live/')
 def return_files_live():
     try:
