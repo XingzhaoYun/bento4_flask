@@ -72,7 +72,6 @@ media_tracks = {
     }
 }
 
-input_list = []
 
 @app.route('/return-manifest-live/')
 def return_files_live():
@@ -94,6 +93,9 @@ def return_files_vod():
 def config():
     if request.method == "POST":
         if request.form.get('action') == 'Submit':
+            input_list = request.form.getlist("selected_track")
+            print(input_list)
+
             timestamp = datetime.now().strftime('%Y_%b_%d_%H_%M_%S')
             request_ip = request.remote_addr
             global vod_manifest_filename, live_manifest_filename
@@ -116,7 +118,7 @@ def config():
             print(audio_args)
 
             if not v_set and not a_set:
-                return render_template("config.html", input_list = input_list, media_tracks = media_tracks)
+                return render_template("config.html", media_tracks = media_tracks)
             # subprocess.call("python " + "utils/mp4-dash.py", shell=True)
             subprocess.call('python bento4/utils/mp4-dash.py -f -o output --no-media --mpd-name ' \
                 + vod_manifest_filename + ' --language-map English:eng,French:fra --profiles on-demand --no-split ' + video_args + ' ' + audio_args, shell=True)
@@ -129,29 +131,14 @@ def config():
                 live_content = live_file.read()
             with open("output/" + vod_manifest_filename, "r") as vod_file:
                 vod_content = vod_file.read()
-            profile = request.form.get("profile", None)
             return render_template("downloads.html", live_content = live_content, live_manifest_filename = live_manifest_filename, \
                 vod_content = vod_content, vod_manifest_filename = vod_manifest_filename)
-        elif request.form.get('action') == 'Add':
-            media_file = request.form.get("media_file", None)
-            if media_file != None and media_file != 'Default' and media_file not in input_list:
-                input_list.append(media_file)
-            return render_template("config.html", input_list = input_list, media_tracks = media_tracks)
-        elif request.form.get('action') == 'Remove':
-            rm_media_list = request.form.getlist("selected_track", None)
-            if input_list and rm_media_list:
-                for file in rm_media_list:
-                    if file in input_list:
-                        input_list.remove(file)
-            return render_template("config.html", input_list = input_list, media_tracks = media_tracks)
         elif request.form.get('action') == 'Reset':
-            input_list.clear()
-            return render_template("config.html", input_list = input_list, media_tracks = media_tracks)
-    return render_template("config.html", input_list = input_list, media_tracks = media_tracks)
+            return render_template("config.html", media_tracks = media_tracks)
+    return render_template("config.html", media_tracks = media_tracks)
 
 
 if __name__ == '__main__':
-    input_list = []
     #app.run(threaded=True)
     app.run(debug=True)
     #app.run(host='0.0.0.0', port=80, threaded=True)

@@ -3,20 +3,32 @@
 {% block subtitle %}Download results{% endblock %}
 {% block body %}
 <ul class="list-group">
-    <li class="list-group-item">
-        <h3>DASH-VOD manifest</h3>
-        <div class="container" align="left">
-            <a href="/return-manifest-vod/" target="blank"><button class='btn btn-primary'>Download DASH-VOD</button></a>
-        </div>
-        <pre>{{ vod_content }}</pre>
-    </li>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div class="col-md-3" align="left">
+                <h3>DASH-VOD manifest</h3>
+            </div>
+            <div class="container" align="right">
+                <a href="/return-manifest-vod/" target="blank"><button class='btn btn-primary'>Download DASH-VOD</button></a>
+            </div>
+        </li>
+        <li>
+            <pre>{{ vod_content }}</pre>
+        </li>
+    </ul>
     <br>
-    <li class="list-group-item">
-        <h3>DASH-LIVE manifest</h3>
-        <div class="container" align="left">
-            <a href="/return-manifest-live/" target="blank"><button class='btn btn-primary'>Download DASH-LIVE</button></a>
-        </div>
-        <pre>{{ live_content}}</pre>
-    </li>
+    <ul>
+        <li class="list-group-item">
+            <div class="col-md-3" align="left">
+                <h3>DASH-LIVE manifest</h3>
+            </div>
+            <div class="container" align="right">
+                <a href="/return-manifest-live/" target="blank"><button class='btn btn-primary'>Download DASH-LIVE</button></a>
+            </div>
+        </li>
+        <li>
+            <pre>{{ live_content}}</pre>
+        </li>
+    </ul>
 </ul>
 {% endblock %}

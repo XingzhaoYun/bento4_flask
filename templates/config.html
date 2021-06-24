@@ -7,40 +7,84 @@
     <ul class="list-group">
         <li class="list-group-item">
             <select id="mySelect1" name = "media_type" class="col-md-3">
-              <option value="Default">Default</option>
+              <option value="Default">Select type</option>
               <option value="Video">Video</option>
               <option value="Audio">Audio</option>
             </select>
             <select id="mySelect2" name = "media_codec" class="col-md-3">
-              <option value="default">Default</option>
+              <option value="default">Select codec</option>
             </select>
             <select id="mySelect3" name = "media_file" class="col-md-3">
-              <option value="default">Default</option>
+              <option value="default">Select file</option>
             </select>
-            <input type = "submit" class="btn btn-primary col-md-2" name='action' value = "Add" style="padding: 2px; width: 22%" />
+            <span class="add">Add</span>
+            <!-- <input type = "submit" class="btn btn-primary col-md-2" name='action' value = "Add" style="padding: 2px; width: 22%" /> -->
         </li>
         <li class="list-group-item">
             <div>
-                <ul class="list-group">
+                <ul class="list-group" id="selected_tracks_table">
                     <p><b>Selected tracks:</b></p>
-                    {% if input_list is defined %}
-                      {% for track in input_list %}
-                      <li class="list-group-item" >
-                        <input class="form-check-input" type="checkbox" name="selected_track" value="{{ track }}"><b>{{ track }}</b><br>
-                      </li>
-                      {% endfor %}
-                    {% endif %}
+                    <ul class="list-group" id="selected_tracks">
+                    </ul>
                 </ul>
             </div>
         </li>
         <li class="list-group-item">
-            <input type = "submit" class="btn btn-primary" name='action' value = "Remove" style="width: 32%" />
-            <input type = "submit" class="btn btn-primary" name='action' value = "Reset" style="width: 33%" />
-            <input type = "submit" class="btn btn-primary" name='action' value = "Submit" style="width: 33%" />
+            <input type = "submit" class="btn btn-primary" name='action' value = "Reset" style="width: 49%" />
+            <input type = "submit" class="btn btn-primary" name='action' value = "Submit" style="width: 49%" />
         </li>
     </ul>
   </form>
   <script>
+    /* Get all elements with class="add" */
+    var addbtns = document.getElementsByClassName("add");
+    var closebtns;
+    addbtns[0].addEventListener("click", function() {
+        var new_file = document.getElementById("mySelect3");
+        var cur_selected_tracks = document.getElementById("selected_tracks");
+        var new_item = document.createElement('li');
+
+        var new_track = document.createElement('input');
+        new_track.setAttribute("type", "checkbox");
+        // new_track.setAttribute("class", "list-group-item");
+        new_track.setAttribute("name", "selected_track");
+        new_track.setAttribute("value", new_file.value);
+        new_track.setAttribute("checked", "check");
+        //new_track.innerHTML = new_file.value;
+
+        var new_label = document.createElement('label');
+        new_label.setAttribute("for", new_file.value);
+        // new_label.innerHTML = new_file.value;
+
+        new_label.innerHTML = document.getElementById("mySelect1").value + ":" + document.getElementById("mySelect2").value + ":" + document.getElementById("mySelect3").value;
+
+        var new_span = document.createElement('span');
+        new_span.setAttribute("class", "close");
+        new_span.innerHTML = 'x';
+
+        new_item.appendChild(new_track);
+        new_item.appendChild(new_span);
+        new_item.appendChild(new_label);
+        cur_selected_tracks.appendChild(new_item);
+
+
+        // new_item.addEventListener("click", function() {
+        //     this.parentElement.remove();
+        // })
+
+        /* Get all elements with class="close" */
+        closebtns = document.getElementsByClassName("close");
+        var i;
+        /* Loop through the elements, and hide the parent, when clicked on */
+        for (i = 0; i < closebtns.length; i++) {
+          closebtns[i].addEventListener("click", function() {
+            // this.parentElement.style.display = 'none';
+            this.parentElement.remove();
+          });
+        }
+    });
+
+
     let type_select = document.getElementById('mySelect1');
     let codec_select = document.getElementById('mySelect2');
     let file_select = document.getElementById('mySelect3');
@@ -49,7 +93,7 @@
     keys = []
     type_select.onchange = function() {
       type = type_select.value;
-      let optionHTML = '<option value="Defalut">Defalut</option>';
+      let optionHTML = '<option value="Defalut">Select codec</option>';
       if (type == 'Audio') {
         let keys = {{media_tracks['audios'] | safe}};
         console.log({{media_tracks['audios'] | safe}});
@@ -65,7 +109,7 @@
     codec_select.onchange = function() {
       type = type_select.value;
       codec = codec_select.value;
-      let optionHTML = '<option value="Defalut">Defalut</option>';
+      let optionHTML = '<option value="Defalut">Select file</option>';
       if (type == 'Audio') {
         if (codec == 'AAC') {
           optionHTML += '<option value=Holi_en_2ch_64kbps_aac.aac>English 2.0 stereo</option><option value=Holi_fr_2ch_64kbps_aac.aac>French 2.0 stereo</option>';
