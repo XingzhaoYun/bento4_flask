@@ -7,68 +7,92 @@ from datetime import datetime
 app = Flask(__name__)
 
 media_tracks = {
-    'videos': {
-        'AVC': [
-        'Holi_360p_25fps_h264.h264',
-        'Holi_540p_25fps_h264.h264',
-        'Holi_720p_25fps_h264.h264',
-        'Holi_1080p_4500kbps_25fps_h264.h264',
-        'Holi_1080p_6000kbps_25fps_h264.h264'
-        ],
-        'HEVC': [
-        'Holi_360p_25fps_h265.h265',
-        'Holi_540p_25fps_h265.h265',
-        'Holi_720p_25fps_h265.h265',
-        'Holi_1080p_25fps_h265.h265',
-        'Holi_1440p_25fps_h265.h265',
-        'Holi_2160p_25fps_h265.h265',
-        'Holi_720p_50fps_h265.h265',
-        'Holi_1080p_50fps_h265.h265',
-        'Holi_1440p_50fps_h265.h265',
-        'Holi_2160p_50fps_h265.h265'
-        ],
-        'Dolby Vision': [
-        'Holi_360p_25fps_h265_str.h265',
-        'Holi_540p_25fps_h265_str.h265',
-        'Holi_720p_25fps_h265_str.h265',
-        'Holi_1080p_25fps_h265_str.h265',
-        'Holi_1440p_25fps_h265_str.h265',
-        'Holi_2160p_25fps_h265_str.h265',
-        'Holi_720p_50fps_h265_str.h265',
-        'Holi_1080p_50fps_h265_str.h265',
-        'Holi_1440p_50fps_h265_str.h265',
-        'Holi_2160p_50fps_h265_str.h265'
-        ]
+    'Video': {
+        'AVC': {
+            '25fps' :[
+                'Holi_360p_25fps_h264.h264',
+                'Holi_540p_25fps_h264.h264',
+                'Holi_720p_25fps_h264.h264',
+                'Holi_1080p_4500kbps_25fps_h264.h264',
+                'Holi_1080p_6000kbps_25fps_h264.h264'
+            ]
+        },
+        'HEVC': {
+            '25fps': [
+                'Holi_360p_25fps_h265.h265',
+                'Holi_540p_25fps_h265.h265',
+                'Holi_720p_25fps_h265.h265',
+                'Holi_1080p_25fps_h265.h265',
+                'Holi_1440p_25fps_h265.h265',
+                'Holi_2160p_25fps_h265.h265'
+            ],
+            '50fps': [
+                'Holi_720p_50fps_h265.h265',
+                'Holi_1080p_50fps_h265.h265',
+                'Holi_1440p_50fps_h265.h265',
+                'Holi_2160p_50fps_h265.h265'
+            ]
+        },
+        'DolbyVision': {
+            '25fps': [
+                'Holi_360p_25fps_h265_str.h265',
+                'Holi_540p_25fps_h265_str.h265',
+                'Holi_720p_25fps_h265_str.h265',
+                'Holi_1080p_25fps_h265_str.h265',
+                'Holi_1440p_25fps_h265_str.h265',
+                'Holi_2160p_25fps_h265_str.h265'
+            ],
+            '50fps': [
+                'Holi_720p_50fps_h265_str.h265',
+                'Holi_1080p_50fps_h265_str.h265',
+                'Holi_1440p_50fps_h265_str.h265',
+                'Holi_2160p_50fps_h265_str.h265'
+            ]
+        }
     },
-    'audios': {
-        'AAC': [
-        'Holi_en_2ch_64kbps_aac.aac',
-        'Holi_fr_2ch_64kbps_aac.aac'
-        ],
-        'DDP-2ch': [
-        'Holi_en_2ch_128kbps_ddp.ec3',
-        'Holi_fr_2ch_128kbps_ddp.ec3'
-        ],
-        'DDP-6ch': [
-        'Holi_en_6ch_256kbps_ddp.ec3',
-        'Holi_fr_6ch_256kbps_ddp.ec3',
-        ],
-        'DDP-JOC': [
-        'Holi_en_6ch_640kbps_ddp_joc.ec3',
-        'Holi_fr_6ch_640kbps_ddp_joc.ec3'
-        ],
-        'AC4-IMS': [
-        'Holi_en_ims_112kbps_25fps_ac4.ac4',
-        'Holi_fr_ims_112kbps_25fps_ac4.ac4',
-        ],
-        'AC4-6ch': [
-        'Holi_en_6ch_128kbps_25fps_ac4.ac4',
-        'Holi_fr_6ch_128kbps_25fps_ac4.ac4',
-        ],
-        'AC4-514ch': [
-        'Holi_en_514ch_192kbps_25fps_ac4.ac4',
-        'Holi_fr_514ch_192kbps_25fps_ac4.ac4'
-        ]
+    'Audio': {
+        'AAC': {
+            'NA' : [
+                'Holi_en_2ch_64kbps_aac.aac',
+                'Holi_fr_2ch_64kbps_aac.aac'
+            ]
+        },
+        'DDP-2ch': {
+            'NA' : [
+                'Holi_en_2ch_128kbps_ddp.ec3',
+                'Holi_fr_2ch_128kbps_ddp.ec3'
+            ]
+        },
+        'DDP-6ch': {
+            'NA' : [
+                'Holi_en_6ch_256kbps_ddp.ec3',
+                'Holi_fr_6ch_256kbps_ddp.ec3',
+            ]
+        },
+        'DDP-JOC': {
+            'NA' : [
+                'Holi_en_6ch_640kbps_ddp_joc.ec3',
+                'Holi_fr_6ch_640kbps_ddp_joc.ec3'
+            ]
+        },
+        'AC4-IMS': {
+            '25fps': [
+                'Holi_en_ims_112kbps_25fps_ac4.ac4',
+                'Holi_fr_ims_112kbps_25fps_ac4.ac4'
+            ]
+        },
+        'AC4-6ch': {
+            '25fps':[
+                'Holi_en_6ch_128kbps_25fps_ac4.ac4',
+                'Holi_fr_6ch_128kbps_25fps_ac4.ac4'
+            ]
+        },
+        'AC4-514ch': {
+            '25fps': [
+                'Holi_en_514ch_192kbps_25fps_ac4.ac4',
+                'Holi_fr_514ch_192kbps_25fps_ac4.ac4'
+            ]
+        }
     }
 }
 

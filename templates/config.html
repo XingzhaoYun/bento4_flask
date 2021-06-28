@@ -6,24 +6,39 @@
   <form id= 'form1' action = '/config' method = "post">
     <ul class="list-group">
         <li class="list-group-item">
-            <select id="mySelect1" name = "media_type" class="col-md-3">
+            <select id="mySelect1" name = "media_type" style="width: 23%">
               <option value="Default">Select type</option>
               <option value="Video">Video</option>
               <option value="Audio">Audio</option>
             </select>
-            <select id="mySelect2" name = "media_codec" class="col-md-3">
+            <select id="mySelect2" name = "media_codec" style="width: 23%">
               <option value="default">Select codec</option>
             </select>
-            <select id="mySelect3" name = "media_file" class="col-md-3">
+            <select id="mySelect3" name = "media_framerate" style="width: 23%">
+              <option value="default">Select framerate</option>
+            </select>
+            <select id="mySelect4" name = "media_file" style="width: 23%">
               <option value="default">Select file</option>
             </select>
-            <span class="add">Add</span>
+            <span class="add"><b>+</b></span>
             <!-- <input type = "submit" class="btn btn-primary col-md-2" name='action' value = "Add" style="padding: 2px; width: 22%" /> -->
         </li>
         <li class="list-group-item">
             <div>
                 <ul class="list-group" id="selected_tracks_table">
                     <p><b>Selected tracks:</b></p>
+                    <table>
+                      <tr>
+                        <td style="padding: 5px; background-color:#DB3A34; color: white; text-align: center;">Type</td>
+                        <td style="padding: 5px; background-color:#FFC857; color: white; text-align: center;">Codec</td>
+                        <td style="padding: 5px; background-color:#084C61; color: white; text-align: center;">Framerate</td>
+                        <td style="padding: 5px; background-color:#177E89; color: white; text-align: center;">Filename</td>
+                      </tr>
+                    </table>
+<!--                     <div style="width: 23%">Type</div>
+                    <div style="width: 23%">Codec</div>
+                    <div style="width: 23%">Framerate</div>
+                    <div style="width: 23%">Filename</div> -->
                     <ul class="list-group" id="selected_tracks">
                     </ul>
                 </ul>
@@ -36,6 +51,7 @@
     </ul>
   </form>
   <script>
+    var myvar = JSON.parse('{{media_tracks | tojson}}');
     /* Get all elements with class="add" */
     var addbtns = document.getElementsByClassName("add");
     var closebtns;
@@ -56,7 +72,7 @@
         new_label.setAttribute("for", new_file.value);
         // new_label.innerHTML = new_file.value;
 
-        new_label.innerHTML = document.getElementById("mySelect1").value + ":" + document.getElementById("mySelect2").value + ":" + document.getElementById("mySelect3").value;
+        new_label.innerHTML = "<span style='background-color:#DB3A34; color: white; border-radius: 15px; padding: 5px'>" + document.getElementById("mySelect1").value + "</span><span style='background-color:#FFC857; color: white; border-radius: 15px; padding: 5px'>" + document.getElementById("mySelect2").value + "</span><span style='background-color:#084C61; color: white;  border-radius: 15px; padding: 5px'> " + document.getElementById("mySelect3").value + "</span><span style='background-color:#177E89; color: white; border-radius: 15px; padding: 5px'>" + document.getElementById("mySelect4").value + "</span>";
 
         var new_span = document.createElement('span');
         new_span.setAttribute("class", "close");
@@ -83,61 +99,55 @@
           });
         }
     });
-
-
     let type_select = document.getElementById('mySelect1');
     let codec_select = document.getElementById('mySelect2');
-    let file_select = document.getElementById('mySelect3');
+    let framerate_select = document.getElementById('mySelect3');
+    let file_select = document.getElementById('mySelect4');
     let type = ''
     let codec = ''
     keys = []
     type_select.onchange = function() {
       type = type_select.value;
       let optionHTML = '<option value="Defalut">Select codec</option>';
-      if (type == 'Audio') {
-        let keys = {{media_tracks['audios'] | safe}};
-        console.log({{media_tracks['audios'] | safe}});
-        optionHTML += '<option value="AAC">AAC</option><option value="DDP-2ch">DDP-2ch</option><option value="DDP-6ch">DDP-6ch</option><option value="DDP-JOC">DDP-JOC</option><option value="AC4-IMS">AC4-IMS</option><option value="AC4-6ch">AC4-6ch</option><option value="AC4-514ch">AC4-514ch</option>';
-        codec_select.innerHTML = optionHTML;
-      } else if (type == 'Video') {
-        let keys = {{media_tracks['audios'] | safe}};
-        console.log(keys.type);
-        optionHTML += '<option value="AVC">AVC</option><option value="HEVC">HEVC</option><option value="Dolby Vision">Dolby Vision</option>'
-        codec_select.innerHTML = optionHTML;
+      var codec_list = Object.keys(myvar[type]);
+      for (let i = 0; i < codec_list.length; i++) {
+        optionHTML += ('<option value=' + codec_list[i] + '>' + codec_list[i] + '</option>');
       }
-    }
+      codec_select.innerHTML = optionHTML;
+    };
     codec_select.onchange = function() {
       type = type_select.value;
       codec = codec_select.value;
-      let optionHTML = '<option value="Defalut">Select file</option>';
-      if (type == 'Audio') {
-        if (codec == 'AAC') {
-          optionHTML += '<option value=Holi_en_2ch_64kbps_aac.aac>English 2.0 stereo</option><option value=Holi_fr_2ch_64kbps_aac.aac>French 2.0 stereo</option>';
-        } else if (codec == 'DDP-2ch') {
-          optionHTML += '<option value=Holi_en_2ch_128kbps_ddp.ec3>English 2.0 stereo</option><option value=Holi_fr_2ch_128kbps_ddp.ec3>French 2.0 stereo</option>';
-        } else if (codec == 'DDP-6ch') {
-          optionHTML += '<option value=Holi_en_6ch_256kbps_ddp.ec3>English 5.1 channels</option><option value=Holi_en_6ch_256kbps_ddp.ec3>French 5.1 channels</option>';
-        } else if (codec == 'DDP-JOC') {
-          optionHTML += '<option value=Holi_en_6ch_640kbps_ddp_joc.ec3>English Atmos</option><option value=Holi_en_6ch_640kbps_ddp_joc.ec3>French Atmos</option>';
-        } else if (codec == 'AC4-IMS') {
-          optionHTML += '<option value=Holi_en_ims_112kbps_25fps_ac4.ac4>English Immersive</option><option value=Holi_en_ims_112kbps_25fps_ac4.ac4>French Immersive</option>';
-        } else if (codec == 'AC4-6ch') {
-          optionHTML += '<option value=Holi_en_6ch_128kbps_25fps_ac4.ac4>English 5.1 channels</option><option value=Holi_en_6ch_128kbps_25fps_ac4.ac4>French 5.1 channels</option>';
-        } else if (codec == 'AC4-514ch') {
-          optionHTML += '<option value=Holi_en_514ch_192kbps_25fps_ac4.ac4>English 5.1.4 channels</option><option value=Holi_en_514ch_192kbps_25fps_ac4.ac4>French 5.1.4 channels</option>';
-        }
-      } else if (type == 'Video') {
-        if (codec == 'AVC') {
-          optionHTML += '<option value=Holi_360p_25fps_h264.h264>25fps 360p</option><option value=Holi_540p_25fps_h264.h264>25fps 540p</option><option value=Holi_720p_25fps_h264.h264>25fps 720p</option><option value=Holi_1080p_4500kbps_25fps_h264.h264>25fps 1080p 4.5Mbps</option><option value=Holi_1080p_6000kbps_25fps_h264.h264>25fps 1080p 6.0Mbps</option>';
-        } else if (codec == 'HEVC') {
-          optionHTML += '<option value=Holi_360p_25fps_h265.h265>25fps 360p</option><option value=Holi_540p_25fps_h265.h265>25fps 540p</option><option value=Holi_720p_25fps_h265.h265>25fps 720p</option><option value=Holi_1080p_25fps_h265.h265>25fps 1080p</option><option value=Holi_1440p_25fps_h265.h265>25fps 1440p</option><option value=Holi_2160p_25fps_h265.h265>25fps 2160p</option><option value=Holi_720p_50fps_h265.h265>50fps 720p</option><option value=Holi_1080p_50fps_h265.h265>50fps 1080p</option><option value=Holi_1440p_50fps_h265.h265>50fps 1440p</option><option value=Holi_2160p_50fps_h265.h265>50fps 2160p</option>';
-        } else if (codec == 'Dolby Vision') {
-          optionHTML += '<option value=Holi_360p_25fps_h265_str.h265>25fps 360p</option><option value=Holi_540p_25fps_h265_str.h265>25fps 540p</option><option value=Holi_720p_25fps_h265_str.h265>25fps 720p</option><option value=Holi_1080p_25fps_h265_str.h265>25fps 1080p</option><option value=Holi_1440p_25fps_h265_str.h265>25fps 1440p</option><option value=Holi_2160p_25fps_h265_str.h265>25fps 2160p</option><option value=Holi_720p_50fps_h265_str.h265>50fps 720p</option><option value=Holi_1080p_50fps_h265_str.h265>50fps 1080p</option><option value=Holi_1440p_50fps_h265_str.h265>50fps 1440p</option><option value=Holi_2160p_50fps_h265_str.h265>50fps 2160p</option>';
+      let optionHTML = '<option value="Defalut">Select framerate</option>';
+      var framerate_list = Object.keys(myvar[type][codec]);
+      console.log(framerate_list);
+      for (let i = 0; i < framerate_list.length; i ++) {
+        if (framerate_list[i] == '25fps') {
+          optionHTML += '<option value="25fps">25 fps</option>';
+        } else if (framerate_list[i] == '50fps') {
+          optionHTML += '<option value="50fps">50 fps</option>';
+        } else if (framerate_list[i] == 'NA'){
+          optionHTML += '<option value="NA">NA</option>';
+          break;
+          //file_select.innerHTML += ('<option value=' + myvar[type][codec][i] + '>' + myvar[type][codec][i] + '</option>');
         }
       }
-      console.log(optionHTML);
+      framerate_select.innerHTML = optionHTML;
+    };
+    framerate_select.onchange = function() {
+      type = type_select.value;
+      codec = codec_select.value;
+      framerate = framerate_select.value;
+      console.log(framerate);
+      file = file_select.value;
+      let optionHTML = '<option value="Defalut">Select file</option>';
+      var file_list = Object.keys(myvar[type][codec][framerate]);
+      console.log(file_list);
+      for (let i = 0; i < file_list.length; i ++) {
+        optionHTML += ('<option value=' + myvar[type][codec][framerate][i] + '>' + myvar[type][codec][framerate][i] + '</option>');
+      }
       file_select.innerHTML = optionHTML;
-    }
+    };
   </script>
 </div>
 {% endblock %}
