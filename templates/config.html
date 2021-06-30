@@ -35,10 +35,6 @@
                         <td style="padding: 5px; background-color:#177E89; color: white; text-align: center;">Filename</td>
                       </tr>
                     </table>
-<!--                     <div style="width: 23%">Type</div>
-                    <div style="width: 23%">Codec</div>
-                    <div style="width: 23%">Framerate</div>
-                    <div style="width: 23%">Filename</div> -->
                     <ul class="list-group" id="selected_tracks">
                     </ul>
                 </ul>
@@ -46,7 +42,7 @@
         </li>
         <li class="list-group-item">
             <input type = "submit" class="btn btn-primary" name='action' value = "Reset" style="width: 49%" />
-            <input type = "submit" class="btn btn-primary" name='action' value = "Submit" style="width: 49%" />
+            <input type = "submit" class="btn btn-primary" name='action' value = "Submit" style="width: 50%" />
         </li>
     </ul>
   </form>
@@ -57,6 +53,10 @@
     var closebtns;
     addbtns[0].addEventListener("click", function() {
         var new_file = document.getElementById("mySelect4");
+        if (new_file.value == 'Defalut') {
+          alert('Please select a file');
+          return;
+        }
         var cur_selected_tracks = document.getElementById("selected_tracks");
         var new_item = document.createElement('li');
 
@@ -98,6 +98,15 @@
             this.parentElement.remove();
           });
         }
+
+        var reset_codec = document.getElementById("mySelect2");
+        var reset_framerate = document.getElementById("mySelect3");
+        var reset_file = document.getElementById("mySelect4");
+
+        reset_codec.innerHTML = '<option value="default">Select codec</option>';
+        reset_framerate.innerHTML = '<option value="default">Select framerate</option>';
+        reset_file.innerHTML = '<option value="default">Select file</option>';
+
     });
     let type_select = document.getElementById('mySelect1');
     let codec_select = document.getElementById('mySelect2');
@@ -122,15 +131,7 @@
       var framerate_list = Object.keys(myvar[type][codec]);
       console.log(framerate_list);
       for (let i = 0; i < framerate_list.length; i ++) {
-        if (framerate_list[i] == '25fps') {
-          optionHTML += '<option value="25fps">25 fps</option>';
-        } else if (framerate_list[i] == '50fps') {
-          optionHTML += '<option value="50fps">50 fps</option>';
-        } else if (framerate_list[i] == 'NA'){
-          optionHTML += '<option value="NA">NA</option>';
-          break;
-          //file_select.innerHTML += ('<option value=' + myvar[type][codec][i] + '>' + myvar[type][codec][i] + '</option>');
-        }
+        optionHTML += '<option value=' + framerate_list[i] + '>' + framerate_list[i] + '</option>';
       }
       framerate_select.innerHTML = optionHTML;
     };
