@@ -92,8 +92,8 @@ def update_live_path(manifest, input_list):
 
         if in_video_adaptationset == True:
             if element.tag == ns + 'SegmentTemplate':
-                element.attrib['initialization'] = '../../content/dash_live/video/' + element.attrib['initialization']
-                element.attrib['media'] = '../../content/dash_live/video/' + element.attrib['media']
+                element.attrib['initialization'] = '../../content/dash_live/' + element.attrib['initialization']
+                element.attrib['media'] = '../../content/dash_live/' + element.attrib['media']
             if element.tag == ns + 'Representation':
                 rep_id = element.attrib['id']
                 if 'video/avc1' in rep_id:
@@ -153,8 +153,8 @@ def update_live_path(manifest, input_list):
 
         if in_audio_adaptationset == True:
             if element.tag == ns + 'SegmentTemplate':
-                element.attrib['initialization'] = '../../content/dash_live/audio/' + element.attrib['initialization']
-                element.attrib['media'] = '../../content/dash_live/video/' + element.attrib['media']
+                element.attrib['initialization'] = '../../content/dash_live/' + element.attrib['initialization']
+                element.attrib['media'] = '../../content/dash_live/' + element.attrib['media']
             if element.tag == ns + 'Representation':
                 channel = ''
                 for child in element.getchildren():
