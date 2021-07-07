@@ -7,9 +7,9 @@
     <ul class="list-group">
         <li class="list-group-item">
             <select id="mySelect1" name = "media_type" style="width: 23%">
-              <option value="Default">Select type</option>
-              <option value="Video">Video</option>
-              <option value="Audio">Audio</option>
+              <option value="default">Select type</option>
+              <option value="video">Video</option>
+              <option value="audio">Audio</option>
             </select>
             <select id="mySelect2" name = "media_codec" style="width: 23%">
               <option value="default">Select codec</option>
@@ -99,10 +99,17 @@
           });
         }
 
+        // document.getElementById("mySelect1").value = 'defalut';
+        // document.getElementById("mySelect2").value = 'defalut';
+        // document.getElementById("mySelect3").value = 'defalut';
+        // document.getElementById("mySelect4").value = 'defalut';
+
+        var reset_type = document.getElementById("mySelect1");
         var reset_codec = document.getElementById("mySelect2");
         var reset_framerate = document.getElementById("mySelect3");
         var reset_file = document.getElementById("mySelect4");
 
+        reset_type.value = 'default';
         reset_codec.innerHTML = '<option value="default">Select codec</option>';
         reset_framerate.innerHTML = '<option value="default">Select framerate</option>';
         reset_file.innerHTML = '<option value="default">Select file</option>';

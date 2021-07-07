@@ -3,11 +3,12 @@ import subprocess
 import logging
 import os
 from datetime import datetime
+from fix_media_path import update_live_path
 
 app = Flask(__name__)
 
 media_tracks = {
-    'Video': {
+    'video': {
         'AVC': {
             '25fps' :[
                 'Holi_360p_25fps_h264.h264',
@@ -50,7 +51,7 @@ media_tracks = {
             ]
         }
     },
-    'Audio': {
+    'audio': {
         'AAC': {
             'NA' : [
                 'Holi_en_2ch_64kbps_aac.aac',
@@ -150,6 +151,8 @@ def config():
             subprocess.call('python bento4/utils/mp4-dash.py -f -o output --no-media --mpd-name ' \
                 + live_manifest_filename + ' --language-map English:eng,French:fra --profiles live --use-segment-template-number-padding --use-segment-timeline ' \
                 + video_args + ' ' + audio_args, shell=True)
+
+            update_live_path("output/" + live_manifest_filename, input_list)
 
             with open("output/" + live_manifest_filename, "r") as live_file:
                 live_content = live_file.read()
