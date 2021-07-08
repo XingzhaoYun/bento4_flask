@@ -3,7 +3,7 @@ import subprocess
 import logging
 import os
 from datetime import datetime
-from fix_media_path import update_live_path
+from fix_media_path import update_live_path, update_ondemand_path
 
 app = Flask(__name__)
 
@@ -131,11 +131,11 @@ def config():
             a_set = []
             for track in input_list:
                 if '.h264' in track or '.h265' in track:
-                    v_set.append(('frag_mp4_DASH/video/' + track).replace('.h264', '_f_dash.mp4').replace('.h265', '_f_dash.mp4'))
+                    v_set.append(('frag_mp4_DASH/video/' + track).replace('.h264', '.mp4').replace('.h265', '.mp4'))
                     print(v_set)
                 elif '.aac' in track or '.ac3' in track or '.ec3' in track or '.ac4' in track:
-                    a_set.append(('frag_mp4_DASH/audio/'+ track).replace('.aac', '_f_dash.mp4'). \
-                    replace('.ac3', '_f_dash.mp4').replace('.ec3', '_f_dash.mp4').replace('.ac4', '_f_dash.mp4'))
+                    a_set.append(('frag_mp4_DASH/audio/'+ track).replace('.aac', '.mp4'). \
+                    replace('.ac3', '.mp4').replace('.ec3', '.mp4').replace('.ac4', '.mp4'))
                     print(a_set)
             video_args = ' '.join(v_set)
             audio_args = ' '.join(a_set)
@@ -152,7 +152,8 @@ def config():
                 + live_manifest_filename + ' --language-map English:eng,French:fra --profiles live --use-segment-template-number-padding --use-segment-timeline ' \
                 + video_args + ' ' + audio_args, shell=True)
 
-            update_live_path("output/" + live_manifest_filename, input_list)
+            update_ondemand_path("output/" + vod_manifest_filename)
+            update_live_path("output/" + live_manifest_filename)
 
             with open("output/" + live_manifest_filename, "r") as live_file:
                 live_content = live_file.read()

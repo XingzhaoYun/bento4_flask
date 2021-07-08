@@ -62,20 +62,120 @@ def update_ondemand_path(manifest):
                 in_audio_adaptationset = True
 
         if in_video_adaptationset == True:
-            if element.tag == ns + 'Initialization':
-                element.attrib['sourceURL'] = '../../content/DASH/OnDemand/Video/' + element.attrib['sourceURL']
-            elif element.tag == ns + 'SegmentURL':
-                element.attrib['media'] = '../../content/DASH/OnDemand/Video/' + element.attrib['media']
+            if element.tag == ns + 'Representation':
+                rep_id = element.attrib['id']
+                if 'video-avc1' in rep_id:
+                    if element.attrib['height'] == '360':
+                        element.attrib['id'] = 'video-avc1-1'
+                    elif element.attrib['height'] == '540':
+                        element.attrib['id'] = 'video-avc1-2'
+                    elif element.attrib['height'] == '720':
+                        element.attrib['id'] = 'video-avc1-3'
+                    elif element.attrib['height'] == '1080':
+                        if int(element.attrib['bandwidth']) > int('5200000'):
+                            element.attrib['id'] = 'video-avc1-4'
+                        else:
+                            element.attrib['id'] = 'video-avc1-5'
+                elif 'video-dvh1-dvh1' in rep_id:
+                    if element.attrib['height'] == '360' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-dvh1-dvh1-1'
+                    elif element.attrib['height'] == '540' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-dvh1-dvh1-2'
+                    elif element.attrib['height'] == '720' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-dvh1-dvh1-3'
+                    elif element.attrib['height'] == '1080' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-dvh1-dvh1-4'
+                    elif element.attrib['height'] == '1440' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-dvh1-dvh1-5'
+                    elif element.attrib['height'] == '2160' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-dvh1-dvh1-6'
+                    elif element.attrib['height'] == '720' and element.attrib['frameRate'] == '50':
+                        element.attrib['id'] = 'video-dvh1-dvh1-7'
+                    elif element.attrib['height'] == '1080' and element.attrib['frameRate'] == '50':
+                        element.attrib['id'] = 'video-dvh1-dvh1-8'
+                    elif element.attrib['height'] == '1440' and element.attrib['frameRate'] == '50':
+                        element.attrib['id'] = 'video-dvh1-dvh1-9'
+                    elif element.attrib['height'] == '2160' and element.attrib['frameRate'] == '50':
+                        element.attrib['id'] = 'video-dvh1-dvh1-10'
+                elif 'video-dvh1' in rep_id:
+                    if element.attrib['height'] == '360' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-hvc1-1'
+                    elif element.attrib['height'] == '540' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-hvc1-2'
+                    elif element.attrib['height'] == '720' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-hvc1-3'
+                    elif element.attrib['height'] == '1080' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-hvc1-4'
+                    elif element.attrib['height'] == '1440' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-hvc1-5'
+                    elif element.attrib['height'] == '2160' and element.attrib['frameRate'] == '25':
+                        element.attrib['id'] = 'video-hvc1-6'
+                    elif element.attrib['height'] == '720' and element.attrib['frameRate'] == '50':
+                        element.attrib['id'] = 'video-hvc1-7'
+                    elif element.attrib['height'] == '1080' and element.attrib['frameRate'] == '50':
+                        element.attrib['id'] = 'video-hvc1-8'
+                    elif element.attrib['height'] == '1440' and element.attrib['frameRate'] == '50':
+                        element.attrib['id'] = 'video-hvc1-9'
+                    elif element.attrib['height'] == '2160' and element.attrib['frameRate'] == '50':
+                        element.attrib['id'] = 'video-hvc1-10'
+                for child in element.getchildren():
+                    if child.tag == ns + 'BaseURL':
+                        child.text = '../content/dash_vod/' + 'media-' + element.attrib['id'] + '.mp4'
 
         if in_audio_adaptationset == True:
-            if element.tag == ns + 'Initialization':
-                element.attrib['sourceURL'] = '../../content/DASH/OnDemand/Audio/' + element.attrib['sourceURL']
-            elif element.tag == ns + 'SegmentURL':
-                element.attrib['media'] = '../../content/DASH/OnDemand/Audio/' + element.attrib['media']
+            if element.tag == ns + 'Representation':
+                channel = ''
+                for child in element.getchildren():
+                    if child.tag == ns + 'AudioChannelConfiguration':
+                        channel = child.attrib['value']
+                    if child.tag == ns + 'SupplementalProperty' and 'virtualized' in child.attrib['schemeIdUri']:
+                        if 'en' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-en-ac-4-1'
+                        elif 'fr' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-fr-ac-4-1'
+                        channel = 'IMS'
+                        break
+                    if child.tag == ns + 'SupplementalProperty' and 'JOC' in child.attrib['value']:
+                        if 'en' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-en-ec-3-3'
+                        elif 'fr' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-fr-ec-3-3'
+                        channel = 'JOC'
+                        break
+                if element.attrib['codecs'] == 'mp4a':
+                    if 'en' in element.attrib['id']:
+                        element.attrib['id'] = 'audio-en-mp4a'
+                    elif 'fr' in element.attrib['id']:
+                        element.attrib['id'] = 'audio-fr-mp4a'
+                elif element.attrib['codecs'] == 'ec-3':
+                    if channel == '2':
+                        if 'en' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-en-ec-3-1'
+                        elif 'fr' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-fr-ec-3-1'
+                    elif channel == '6':
+                        if 'en' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-en-ec-3-2'
+                        elif 'fr' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-fr-ec-3-2'
+                elif 'ac-4' in element.attrib['codecs']:
+                    if channel == '6':
+                        if 'en' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-en-ac-4-2'
+                        elif 'fr' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-fr-ac-4-2'
+                    elif channel == '16':
+                        if 'en' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-en-ac-4-3'
+                        elif 'fr' in element.attrib['id']:
+                            element.attrib['id'] = 'audio-fr-ac-4-3'
+                for child in element.getchildren():
+                    if child.tag == ns + 'BaseURL':
+                        child.text = '../content/dash_vod/' + 'media-' + element.attrib['id'] + '.mp4'
     tree.write(manifest, xml_declaration=True)
 
 
-def update_live_path(manifest, input_list):
+def update_live_path(manifest):
     parser = etree.XMLParser(ns_clean=True)
     tree = etree.parse(manifest, parser)
     xmlroot = tree.getroot()
@@ -190,7 +290,7 @@ def update_live_path(manifest, input_list):
                             element.attrib['id'] = 'audio/en/ec-3/2'
                         elif 'fr' in element.attrib['id']:
                             element.attrib['id'] = 'audio/fr/ec-3/2'
-                elif element.attrib['codecs'] == 'ac-4':
+                elif 'ac-4' in element.attrib['codecs']:
                     if channel == '6':
                         if 'en' in element.attrib['id']:
                             element.attrib['id'] = 'audio/en/ac-4/2'
