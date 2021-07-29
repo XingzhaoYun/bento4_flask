@@ -101,14 +101,14 @@ media_tracks = {
 @app.route('/return-manifest-live/')
 def return_files_live():
     try:
-        return send_file('/Users/xyun/Documents/Git/bento4_flask/output/' + live_manifest_filename, mimetype='text/mpd',as_attachment=True)
+        return send_file(app.root_path + '/output/' + live_manifest_filename, mimetype='text/mpd',as_attachment=True)
     except Exception as e:
         return str(e)
 
 @app.route('/return-manifest-vod/')
 def return_files_vod():
     try:
-        return send_file('/Users/xyun/Documents/Git/bento4_flask/output/' + vod_manifest_filename, mimetype='text/mpd', as_attachment=True)
+        return send_file(app.root_path + '/output/' + vod_manifest_filename, mimetype='text/mpd', as_attachment=True)
     except Exception as e:
         return str(e)
 
