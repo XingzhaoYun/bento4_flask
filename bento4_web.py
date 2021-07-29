@@ -3,6 +3,7 @@ import subprocess
 import logging
 import os
 from datetime import datetime
+import shutil
 from fix_media_path import update_live_path, update_ondemand_path
 
 app = Flask(__name__)
@@ -154,6 +155,9 @@ def config():
 
             update_ondemand_path("output/" + vod_manifest_filename)
             update_live_path("output/" + live_manifest_filename)
+
+            shutil.copy(app.root_path + '/output/' + live_manifest_filename, '/Volumes/media2/xyun/output')
+            shutil.copy(app.root_path + '/output/' + vod_manifest_filename, '/Volumes/media2/xyun/output')
 
             with open("output/" + live_manifest_filename, "r") as live_file:
                 live_content = live_file.read()
