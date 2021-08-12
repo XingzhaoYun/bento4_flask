@@ -11,6 +11,9 @@
             <div class="container" align="right">
                 <a href="/return-manifest-vod/" target="blank"><button class='btn btn-primary'>Download DASH-VOD</button></a>
             </div>
+            <form action="/player", method="post">
+                <button type='submit' name='Play' value={{live_manifest_filename}}>Play</button>
+            </form>
         </li>
         <li>
             <pre><code class="xml">{{ vod_content }}</code></pre>
@@ -25,6 +28,9 @@
             <div class="container" align="right">
                 <a href="/return-manifest-live/" target="blank"><button class='btn btn-primary'>Download DASH-LIVE</button></a>
             </div>
+            <form action="/player", method="post">
+                <button type='submit' name='Play' value={{vod_manifest_filename}}>Play</button>
+            </form>
         </li>
         <li>
             <pre><code class="xml">{{ live_content}}</code></pre>

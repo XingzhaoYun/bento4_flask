@@ -113,6 +113,12 @@ def return_files_vod():
     except Exception as e:
         return str(e)
 
+@app.route('/player', methods=['GET', 'POST'])
+def streaming_content():
+    mpd_name = request.form.get('Play')
+    source_path = 'http://disc.eng.dolby.net/media2/xyun/output/' + mpd_name
+    return render_template("player.html", source_path=source_path)
+
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/config', methods=['GET', 'POST'])
@@ -156,8 +162,8 @@ def config():
             update_ondemand_path("output/" + vod_manifest_filename)
             update_live_path("output/" + live_manifest_filename)
 
-            shutil.copy(app.root_path + '/output/' + live_manifest_filename, '/Volumes/media2/xyun/output')
-            shutil.copy(app.root_path + '/output/' + vod_manifest_filename, '/Volumes/media2/xyun/output')
+            # shutil.copy(app.root_path + '/output/' + live_manifest_filename, '/Volumes/media2/xyun/output')
+            # shutil.copy(app.root_path + '/output/' + vod_manifest_filename, '/Volumes/media2/xyun/output')
 
             with open("output/" + live_manifest_filename, "r") as live_file:
                 live_content = live_file.read()
