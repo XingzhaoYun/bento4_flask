@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}DASH Player{% endblock %}
+{% block subtitle %}Download results{% endblock %}
+{% block body %}
+<div>
+<!--     <video data-dashjs-player autoplay src= {{live_manifest_filename}} controls>
+    </video> -->
+    <video data-dashjs-player autoplay src={{source_path}} controls>
+    </video>
+</div>
+<script src="http://cdn.dashjs.org/latest/dash.all.min.js"></script>
+{% endblock %}
